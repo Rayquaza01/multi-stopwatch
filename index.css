@@ -1,0 +1,80 @@
+:root {
+    --background-color: #f6f5f4;
+    --text-color: #000000;
+
+    --accent-color: #e5a50a;
+    --accent-text-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #241f31;
+        --color: #ffffff;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    #app {
+        flex-direction: column;
+    }
+}
+
+body, html {
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    background-color: var(--background-color);
+    color: var(--color);
+}
+
+header {
+    background-color: var(--accent-color);
+    color: var(--accent-text-color);
+
+    padding: 20px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+#main {
+    margin: 2% 5% 2%;
+}
+
+#app {
+    margin: 2% 0 0;
+
+    display: flex;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.stopwatch {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.timer {
+    font-variant-numeric: slashed-zero;
+    font-weight: bold;
+    font-size: larger;
+}
+
+input {
+    width: 90%;
+    font-size: medium;
+    font-weight: bold;
+
+    background-color: var(--background-color);
+    color: var(--color);
+    border-style: none none solid none;
+}
+
+input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+button {
+    font-size: small;
+}
