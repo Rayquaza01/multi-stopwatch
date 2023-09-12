@@ -1,11 +1,19 @@
 const app = document.querySelector("#app");
 const add = document.querySelector("#add-sw");
 
+// saves all running stopwatches to local storage
 function save() {
     localStorage.setItem("stopwatches", JSON.stringify(stopwatches.filter(sw => !sw.delete).map(sw => sw.serialize())));
 }
 
 class StopWatch {
+    /**
+     *
+     * @param {string} name The name of the stopwatch
+     * @param {number} offset The time the stopwatch is set to. Should be 0 unless resuming
+     * @param {boolean} running If the stopwatch is running.
+     * @param {Date} startTime Time the stopwatch is counting from. Should be 0 if not running
+     */
     constructor(name = "Stopwatch", offset = 0, running = false, startTime = new Date(0)) {
         this.container = document.createElement("div");
         this.container.classList.add("stopwatch");
@@ -45,6 +53,9 @@ class StopWatch {
         if (running) this.toggleTimer();
     }
 
+    /**
+     * Updates the timer. Runs every ms if timer is running.
+     */
     updateTimer() {
         const timer = !this.running
             ? new Date(this.offset)
@@ -56,6 +67,10 @@ class StopWatch {
 
     }
 
+    /**
+     * Toggles the timer's running state
+     * @param {boolean} toSave If false, will not update localstorage
+     */
     toggleTimer(toSave = false) {
         this.running = !this.running;
 
@@ -75,6 +90,10 @@ class StopWatch {
         if (toSave) save();
     }
 
+    /**
+     * Resets the timer
+     * @param {boolean} toSave If false, will not update localstorage
+     */
     resetTimer(toSave = false) {
         if (this.running) this.toggleTimer()
         this.startTime = new Date(0);
@@ -85,8 +104,9 @@ class StopWatch {
     }
 
     deleteTimer() {
-        app.removeChild(this.container);
+        this.container.parentElement.removeChild(this.container);
         this.delete = true;
+        if (this.running) clearInterval(this.timer);
         save();
     }
 
@@ -100,7 +120,9 @@ class StopWatch {
     }
 }
 
+// gets stopwatches from local storage
 const swLocalStorage = JSON.parse(localStorage.getItem("stopwatches") ?? "[]");
+// creates stopwatch elements and classes from loaded data
 const stopwatches = swLocalStorage.map((item) => {
     console.log(item);
     const sw = new StopWatch(item.name, item.offset, item.running, new Date(item.startTime));
@@ -111,14 +133,10 @@ const stopwatches = swLocalStorage.map((item) => {
 });
 
 
+// adds a new stop watch
 add.addEventListener("click", () => {
     const sw = new StopWatch();
     app.appendChild(sw.container);
     stopwatches.push(sw);
     save();
 });
-
-// const sw = new StopWatch();
-// const sw2 = new StopWatch();
-// document.querySelector("#app").appendChild(sw.container);
-// document.querySelector("#app").appendChild(sw2.container);
