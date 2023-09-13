@@ -21,6 +21,7 @@
 
 body, html {
     margin: 0;
+    height: 100%;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     background-color: var(--background-color);
@@ -36,14 +37,11 @@ header {
     font-size: x-large;
 }
 
-#main {
-    margin: 2% 5% 2%;
-}
-
 #app {
-    margin: 2% 0 0;
+    margin: 2% 5% 2%;
 
     display: flex;
+    flex-wrap: wrap;
     column-gap: 20px;
     row-gap: 20px;
 }
@@ -52,6 +50,8 @@ header {
     border: 1px solid;
     border-radius: 10px;
     padding: 10px;
+
+    height: fit-content;
 }
 
 .timer {
